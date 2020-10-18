@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace adressBook
 {
@@ -38,13 +39,33 @@ namespace adressBook
 
 
         /// <summary>
-        /// Displays the contact.
+        /// Gets the first name.
         /// </summary>
-        public void displayContact()
+        /// <returns></returns>
+        public string getFirstName()
         {
-            Console.WriteLine("Name : " + this.firstName + " \nContact No : " + this.phoneNumber + " \nCity : " + this.city + " \nState : " + this.state + "\nZip : " + this.zip + " \nEmail :" + this.emailId);
+            return this.firstName;
+
         }
-        // Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Gets the phone number.
+        /// </summary>
+        /// <returns></returns>
+        public string getPhoneNumber()
+        {
+            return this.phoneNumber;
+        }
+
+        /// <summary>
+        /// Sets the phone number.
+        /// </summary>
+        public void setPhoneNumber(string phoneNumber)
+        {
+            this.phoneNumber = phoneNumber;
+        }
+
+
 
 
 
