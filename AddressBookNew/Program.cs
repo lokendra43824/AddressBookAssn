@@ -8,52 +8,111 @@ namespace adressBook
     class Program
     {
 
+        static Dictionary<string, peopleBook> dict = new Dictionary<string, peopleBook>();
+
+
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
         /// <param name="args">The arguments.</param>
         static void Main(string[] args)
-        {
 
+        {
+            //variables
+            int n = 0;
+            int option = 0;
             Console.WriteLine("Welcome to Address Book program");
 
-            int option;
-            peopleBook obj = new peopleBook();
-
-            do
+            Console.WriteLine("How many people's contacts you want to add");
+            try
             {
-                Console.WriteLine("Choose Your Option");
-                Console.WriteLine("1.Add new contact\n2.Edit the contact\n3.Delete the contact\n4.Display all contact\n5.Exit");
+                n = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("You have entered wrong input");
+            }
 
-                option = Convert.ToInt32(Console.ReadLine());
 
-                if (option == 1)
-                {
-                    obj.getInput();
 
+            peopleBook[] obj = new peopleBook[n];
+            for (int i = 0; i < n; i++)
+            {
+                string name;
+                Console.WriteLine("Enter your name : ");
+                name = Console.ReadLine();
+                while (!peopleBook.validateString(name))
+                {
+                    Console.WriteLine("Please Enter the proper name ");
+                    name = Console.ReadLine();
                 }
-                else if (option == 2)
+                obj[i] = new peopleBook();
+                dict.Add(name, obj[i]);
+
+                do
                 {
 
-                    obj.editContact();
-                }
-                else if (option == 3)
-                {
+                    Console.WriteLine("\n");
+                    Console.WriteLine("Choose Your Option");
+                    Console.WriteLine("1.Add new contact\n2.Edit the contact\n3.Delete the contact\n4.Display all contact\n5.Exit");
+                    try
+                    {
 
-                    obj.deleteContact();
-                }
-                else if (option == 4)
-                {
-                    obj.displayContact();
-                }
-                else
-                {
-                    Environment.Exit(1);
-                }
-            } while (option <= 5);
+                        option = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("You have entered wrong input");
+                    }
+
+                    if (option == 1)
+                    {
+                        obj[i].getInput();
+
+                    }
+                    else if (option == 2)
+                    {
+
+                        obj[i].editContact();
+                    }
+                    else if (option == 3)
+                    {
+
+                        obj[i].deleteContact();
+                    }
+                    else if (option == 4)
+                    {
+                        obj[i].displayContact();
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    Console.WriteLine("\n");
+                } while (option <= 5);
+
+                displayPersonContacts(name);
+            }
+
+
 
         }
 
-
+        /// <summary>
+        /// Displays the person contacts.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        public static void displayPersonContacts(string name)
+        {
+            foreach (KeyValuePair<string, peopleBook> kvp in dict)
+            {
+                if (kvp.Key.Equals(name))
+                {
+                    Console.WriteLine("Hey " + name);
+                    kvp.Value.displayContact();
+                }
+            }
+        }
     }
 }
