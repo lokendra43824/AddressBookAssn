@@ -42,7 +42,7 @@ namespace adressBook
         /// </summary>
         public void displayContact()
         {
-            Console.WriteLine("Name : " + this.firstName + "  Contact No : " + this.phoneNumber);
+            Console.WriteLine("Name : " + this.firstName + " \nContact No : " + this.phoneNumber + " \nCity : " + this.city + " \nState : " + this.state + "\nZip : " + this.zip + " \nEmail :" + this.emailId);
         }
         // Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
