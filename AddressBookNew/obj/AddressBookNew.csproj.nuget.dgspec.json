@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\NAGENDRA AND JANAKI\\source\\repos\\AddressBookNew\\AddressBookNew\\AddressBookNew.csproj": {}
+    "C:\\Users\\NAGENDRA AND JANAKI\\Desktop\\repos\\AddressBookNew\\AddressBookNew\\AddressBookNew.csproj": {}
   },
   "projects": {
-    "C:\\Users\\NAGENDRA AND JANAKI\\source\\repos\\AddressBookNew\\AddressBookNew\\AddressBookNew.csproj": {
+    "C:\\Users\\NAGENDRA AND JANAKI\\Desktop\\repos\\AddressBookNew\\AddressBookNew\\AddressBookNew.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NAGENDRA AND JANAKI\\source\\repos\\AddressBookNew\\AddressBookNew\\AddressBookNew.csproj",
+        "projectUniqueName": "C:\\Users\\NAGENDRA AND JANAKI\\Desktop\\repos\\AddressBookNew\\AddressBookNew\\AddressBookNew.csproj",
         "projectName": "AddressBookNew",
-        "projectPath": "C:\\Users\\NAGENDRA AND JANAKI\\source\\repos\\AddressBookNew\\AddressBookNew\\AddressBookNew.csproj",
+        "projectPath": "C:\\Users\\NAGENDRA AND JANAKI\\Desktop\\repos\\AddressBookNew\\AddressBookNew\\AddressBookNew.csproj",
         "packagesPath": "C:\\Users\\NAGENDRA AND JANAKI\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NAGENDRA AND JANAKI\\source\\repos\\AddressBookNew\\AddressBookNew\\obj\\",
+        "outputPath": "C:\\Users\\NAGENDRA AND JANAKI\\Desktop\\repos\\AddressBookNew\\AddressBookNew\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\NAGENDRA AND JANAKI\\AppData\\Roaming\\NuGet\\NuGet.Config",
