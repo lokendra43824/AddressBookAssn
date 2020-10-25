@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
-
+using System.IO;
 namespace adressBook
 {
 
@@ -92,8 +92,14 @@ namespace adressBook
 
 
 
+
+                string path = "C:\\Users\\NAGENDRA AND JANAKI\\Desktop\\repos\\AddressBookNew\\exmp.txt";
+
+
                 contact = new contactBook(firstName, lastName, address, city, state, zip, phoneNumber, emailId);
                 list.Add(contact);
+                string text = contact.getFirstName() + "\t" + contact.getLastName() + "\t" + contact.getAddress() + "\t" + contact.getCity() + "\t" + contact.getState() + "\t" + contact.getZip() + "\t" + contact.getPhoneNumber() + "\t" + contact.getEmailId() + "\n";
+                File.AppendAllText(path, text);
 
                 statewiseContact.Add(firstName, state);
                 citywiseContact.Add(firstName, city);
@@ -385,8 +391,8 @@ namespace adressBook
 
             else
             {
-                //SortBasedOnName();
-                   SortBasedOnCity();
+                SortBasedOnName();
+                //   SortBasedOnCity();
                 //   SortBasedOnState();
                 //   SortBasedOnZip();
                 Console.WriteLine("FirstName\tLastName\taddress\tCity\tState\tZip\tPhoneNumber\tEmail-Id");
