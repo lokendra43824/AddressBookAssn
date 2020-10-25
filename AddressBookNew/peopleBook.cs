@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace adressBook
 {
@@ -13,7 +14,7 @@ namespace adressBook
         /// <summary>
         /// The list
         /// </summary>
-        List<contactBook> list = new List<contactBook>();
+        public List<contactBook> list = new List<contactBook>();
         public static Dictionary<string, string> statewiseContact = new Dictionary<string, string>();
         public static Dictionary<string, string> citywiseContact = new Dictionary<string, string>();
 
@@ -375,12 +376,16 @@ namespace adressBook
         /// </summary>
         public void displayContact()
         {
+
             if (list.Count == 0)
             {
-                Console.WriteLine("No contacts to Display");
+                Console.WriteLine("\nNo contacts to Display\n");
+
             }
+
             else
             {
+                SortBasedOnName();
                 Console.WriteLine("FirstName\tLastName\taddress\tCity\tState\tZip\tPhoneNumber\tEmail-Id");
                 foreach (var temp in list)
                 {
@@ -408,6 +413,12 @@ namespace adressBook
             }
             return false;
 
+
+        }
+
+        public void SortBasedOnName()
+        {
+            list = list.OrderBy(o => o.getFirstName()).ToList();
 
         }
 

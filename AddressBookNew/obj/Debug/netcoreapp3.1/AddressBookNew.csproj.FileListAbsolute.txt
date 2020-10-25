@@ -11,3 +11,16 @@ C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\obj\Debu
 C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.dll
 C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.pdb
 C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.genruntimeconfig.cache
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\bin\Debug\netcoreapp3.1\AddressBookNew.exe
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\bin\Debug\netcoreapp3.1\AddressBookNew.deps.json
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\bin\Debug\netcoreapp3.1\AddressBookNew.runtimeconfig.json
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\bin\Debug\netcoreapp3.1\AddressBookNew.runtimeconfig.dev.json
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\bin\Debug\netcoreapp3.1\AddressBookNew.dll
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\bin\Debug\netcoreapp3.1\AddressBookNew.pdb
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.csprojAssemblyReference.cache
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.AssemblyInfoInputs.cache
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.AssemblyInfo.cs
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.csproj.CoreCompileInputs.cache
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.dll
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.pdb
+C:\Users\NAGENDRA AND JANAKI\Desktop\repos\AddressBookNew\AddressBookNew\obj\Debug\netcoreapp3.1\AddressBookNew.genruntimeconfig.cache
