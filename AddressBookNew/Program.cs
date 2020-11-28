@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Transactions;
 
-namespace adressBook
+namespace AddressBookNew
 {
-    class Program
+    public class Program
     {
 
         static Dictionary<string, peopleBook> dict = new Dictionary<string, peopleBook>();
@@ -28,9 +29,16 @@ namespace adressBook
 
             do
             {
-                Console.WriteLine("1.Add an Adress Book\n2.Display Address Book\n3.Search by State\n4.Search by City \n5.Exit");
-                choose = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("\n1.Add an Adress Book\n2.Display Address Book\n3.Search by State\n4.Search by City \n5.Edit or Enter into Address Book\n6.Display DB \n 7.Exit");
 
+                try
+                {
+                    choose = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("You have entered wrong input");
+                }
                 if (choose == 1)
                 {
                     peopleBook obj = new peopleBook();
@@ -51,7 +59,7 @@ namespace adressBook
 
                         Console.WriteLine("\n");
                         Console.WriteLine("Choose Your Option");
-                        Console.WriteLine("1.Add new contact\n2.Edit the contact\n3.Delete the contact\n4.Display all contact\n5.Exit from your Address Book");
+                        Console.WriteLine("\n1.Add an Adress Book\n2.Display Address Book\n3.Search by State\n4.Search by City \n5.Edit or Enter into Address Book\n6.Display");
                         try
                         {
 
@@ -65,21 +73,37 @@ namespace adressBook
                         if (option == 1)
                         {
                             obj.addContact();
+                            obj.writeIntoCSV();
+                            obj.writeIntoJSON();
 
                         }
                         else if (option == 2)
                         {
 
                             obj.editContact();
+                            obj.writeIntoCSV();
+                            obj.writeIntoJSON();
                         }
                         else if (option == 3)
                         {
 
                             obj.deleteContact();
+                            obj.writeIntoCSV();
+                            obj.writeIntoJSON();
                         }
                         else if (option == 4)
                         {
                             obj.displayContact();
+
+                        }
+
+                        else if (option == 5)
+                        {
+                            obj.DisplayCsvFile();
+                        }
+                        else if (option == 6)
+                        {
+                            obj.DisplayJsonFile();
                         }
                         else
                         {
@@ -87,7 +111,7 @@ namespace adressBook
                         }
 
                         Console.WriteLine("\n");
-                    } while (option <= 5);
+                    } while (option <= 7);
                 }
                 else if (choose == 2)
                 {
@@ -103,12 +127,104 @@ namespace adressBook
                 {
                     searchByCity();
                 }
+                else if (choose == 5)
+                {
+                    string name;
+                    Console.WriteLine("Enter your name : ");
+                    name = Console.ReadLine();
+                    while (!peopleBook.validateString(name))
+                    {
+                        Console.WriteLine("Please Enter the proper name ");
+                        name = Console.ReadLine();
+                    }
+                    int check = 0;
+                    foreach (var element in dict)
+                    {
+                        if (element.Key.Equals(name))
+                        {
+                            var obj = element.Value;
+                            do
+                            {
+                                obj.writeIntoCSV();
+                                obj.writeIntoJSON();
+                                Console.WriteLine("\n");
+                                Console.WriteLine("Choose Your Option");
+                                Console.WriteLine("\n1.Add new contact\n2.Edit the contact\n3.Delete the contact\n4.Display all contact\n5.Display CSV file\n6.Display Json File\n7.Exit from your Address Book");
+                                try
+                                {
 
+                                    option = Convert.ToInt32(Console.ReadLine());
+                                }
+                                catch (Exception)
+                                {
+                                    Console.WriteLine("You have entered wrong input");
+                                }
+
+                                if (option == 1)
+                                {
+                                    obj.addContact();
+                                    obj.writeIntoCSV();
+                                    obj.writeIntoJSON();
+                                }
+                                else if (option == 2)
+                                {
+
+                                    obj.editContact();
+                                    obj.writeIntoCSV();
+                                    obj.writeIntoJSON();
+
+                                }
+                                else if (option == 3)
+                                {
+
+                                    obj.deleteContact();
+
+                                    obj.writeIntoCSV();
+                                    obj.writeIntoJSON();
+                                }
+                                else if (option == 4)
+                                {
+                                    obj.displayContact();
+                                }
+
+                                else if (option == 5)
+                                {
+                                    obj.DisplayCsvFile();
+                                }
+                                else if (option == 6)
+                                {
+                                    obj.DisplayJsonFile();
+                                }
+                                else
+                                {
+                                    break;
+                                }
+
+                                check = 1;
+                                Console.WriteLine("\n");
+                                //break;
+                            } while (option <= 7);
+                        }
+                    }
+                    if (check == 0)
+                    {
+                        Console.WriteLine("No address Book found for the given name");
+                    }
+                }
+                else if (choose == 6)
+                {
+                    AdressBookDB db = new AdressBookDB();
+                    db.getAllContacts();
+                }
                 else
                 {
+
+                    string path = "E:\\ContactFIle\\contacts.txt";
+                    File.WriteAllText(path, string.Empty);
+
                     break;
                 }
-            } while (choose <= 6);
+            } while (choose <= 7);
 
 
         }
@@ -157,7 +273,7 @@ namespace adressBook
 
         public static void searchByState()
         {
-            if (peopleBook.statewiseContact.Count == 0)
+            if (dict.Count == 0)
             {
                 Console.WriteLine("\nNo Address Book have been added to search\n");
             }
@@ -167,12 +283,17 @@ namespace adressBook
                 Console.WriteLine("Enter the state name to search ");
                 string state = Console.ReadLine();
                 int count = 0;
-                foreach (var element in peopleBook.statewiseContact)
+                foreach (var book in dict)
                 {
-                    if (element.Value.Equals(state))
+
+                    foreach (var contact in book.Value.list)
                     {
-                        Console.WriteLine("\n" + element.Key);
-                        count++;
+                        if (contact.State.Equals(state))
+                        {
+                            //Console.WriteLine("\n" + element.Key);
+                            book.Value.displayContact();
+                            count++;
+                        }
                     }
                 }
                 if (count == 0)
@@ -181,8 +302,7 @@ namespace adressBook
                 }
                 else
                 {
-                    Console.WriteLine("No of contacts in the " + state + " state is " + count);
-                    //  countBasedOnState.Add(state, count);
+                    Console.WriteLine("Number of contacts in the " + state + " state is " + count);
 
                 }
             }
@@ -194,7 +314,7 @@ namespace adressBook
         /// </summary>
         public static void searchByCity()
         {
-            if (peopleBook.citywiseContact.Count == 0)
+            if (dict.Count == 0)
             {
                 Console.WriteLine("\nNo Address Book have been added to search\n");
             }
@@ -204,12 +324,17 @@ namespace adressBook
                 Console.WriteLine("Enter the city name to search ");
                 string city = Console.ReadLine();
                 int count = 0;
-                foreach (var element in peopleBook.citywiseContact)
+                foreach (var book in dict)
                 {
-                    if (element.Value.Equals(city))
+
+                    foreach (var contact in book.Value.list)
                     {
-                        Console.WriteLine("\n" + element.Key);
-                        count++;
+                        if (contact.City.Equals(city))
+                        {
+                            //Console.WriteLine("\n" + element.Key);
+                            book.Value.displayContact();
+                            count++;
+                        }
                     }
                 }
                 if (count == 0)

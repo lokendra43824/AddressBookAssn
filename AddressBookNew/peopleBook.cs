@@ -2,100 +2,182 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
+using System.IO;
+using System.Threading;
+using System.Runtime.CompilerServices;
+using System.Net.Mail;
+using System.Globalization;
+using CsvHelper;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
-namespace adressBook
+namespace AddressBookNew
 {
 
 
     public class peopleBook
     {
 
+
         /// <summary>
         /// The list
         /// </summary>
-        List<contactBook> list = new List<contactBook>();
+        public List<contactBook> list = new List<contactBook>();
         public static Dictionary<string, string> statewiseContact = new Dictionary<string, string>();
         public static Dictionary<string, string> citywiseContact = new Dictionary<string, string>();
 
+        public void writeIntoCSV()
+        {
+            string exportPath = @"C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\contacts.csv";
 
+            using (StreamWriter sw = new StreamWriter(exportPath))
+            using (CsvWriter writer = new CsvWriter(sw, CultureInfo.InvariantCulture))
+            {
+                writer.WriteRecords(list);
+            }
+        }
+
+        public void DisplayCsvFile()
+        {
+            String importPath = @"C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\contacts.csv";
+
+            using (StreamReader sr = new StreamReader(importPath))
+            using (CsvReader reader = new CsvReader(sr, CultureInfo.InvariantCulture))
+            {
+                List<contactBook> records = reader.GetRecords<contactBook>().ToList();
+
+                foreach (var record in records)
+                {
+
+                    Console.WriteLine(record.FirstName + "\t" + record.LastName + "\t" + record.Address + "\t" + record.City + "\t" + record.State + "\t" + record.PhoneNumber + "\t" + record.EmailId);
+                }
+            }
+        }
+
+        public void writeIntoJSON()
+        {
+            String importPath = @"C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\contacts.csv";
+            string exportPath = @"C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\example.json";
+            using (StreamReader sr = new StreamReader(importPath))
+            using (CsvReader reader = new CsvReader(sr, CultureInfo.InvariantCulture))
+            {
+                var records = reader.GetRecords<contactBook>().ToList();
+
+                JsonSerializer serializer = new JsonSerializer();
+                using (StreamWriter sw = new StreamWriter(exportPath))
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, records);
+                }
+            }
+
+
+        }
+
+        public void DisplayJsonFile()
+        {
+            string exportPath = @"C:\Users\Administrator\source\repos\adressBook\adressBook\contacts.json";
+
+            IList<contactBook> contactBooks = JsonConvert.DeserializeObject<IList<contactBook>>(File.ReadAllText(exportPath));
+
+            foreach (var contact in contactBooks)
+            {
+
+                Console.WriteLine(contact.FirstName + "\t" + contact.LastName + "\t" + contact.Address + "\t" + contact.City + "\t" + contact.State + "\t" + contact.PhoneNumber + "\t" + contact.EmailId);
+
+            }
+
+        }
         /// <summary>
         /// Adds the contact.
         /// </summary>
         public void addContact()
         {
             contactBook contact;
-            // int i = 0;
+
             Console.WriteLine("Enter the first name");
-            string firstName = Console.ReadLine();
-            while (!validateString(firstName))
+            string FirstName = Console.ReadLine();
+            while (!validateString(FirstName))
             {
                 Console.WriteLine("Please Enter the proper first name");
-                firstName = Console.ReadLine();
+                FirstName = Console.ReadLine();
             }
-            if (!Equals(firstName))
+            if (!Equals(FirstName))
             {
+
                 Console.WriteLine("Enter the last name");
-                string lastName = Console.ReadLine();
-                while (!validateString(lastName))
+                string LastName = Console.ReadLine();
+                while (!validateString(LastName))
                 {
                     Console.WriteLine("Please Enter the proper Last name");
-                    lastName = Console.ReadLine();
+                    LastName = Console.ReadLine();
                 }
                 Console.WriteLine("Enter the address");
-                string address = Console.ReadLine();
-                while (!validateString(address))
+                string Address = Console.ReadLine();
+                while (!validateString(Address))
                 {
                     Console.WriteLine("Enter the proper address");
-                    address = Console.ReadLine();
+                    Address = Console.ReadLine();
                 }
                 Console.WriteLine("Enter the city name");
-                string city = Console.ReadLine();
-                while (!validateString(city))
+                string City = Console.ReadLine();
+                while (!validateString(City))
                 {
                     Console.WriteLine("Please Enter the proper city name");
-                    city = Console.ReadLine();
+                    City = Console.ReadLine();
                 }
                 Console.WriteLine("Enter the state name");
-                string state = Console.ReadLine();
-                while (!validateString(state))
+                string State = Console.ReadLine();
+                while (!validateString(State))
                 {
                     Console.WriteLine("Please Enter the proper state name");
-                    state = Console.ReadLine();
+                    State = Console.ReadLine();
                 }
                 Console.WriteLine("Enter the zip code");
-                string zip = Console.ReadLine();
-                while (!validateZip(zip))
+                string Zip = Console.ReadLine();
+                while (!validateZip(Zip))
                 {
                     Console.WriteLine("Please Enter the proper zip code");
-                    zip = Console.ReadLine();
+                    Zip = Console.ReadLine();
                 }
 
 
                 Console.WriteLine("Enter the phone number");
 
-                string phoneNumber = Console.ReadLine();
-                while (!validatePhoneNumber(phoneNumber))
+                string PhoneNumber = Console.ReadLine();
+                while (!validatePhoneNumber(PhoneNumber))
                 {
                     Console.WriteLine("Please enter proper mobile number");
-                    phoneNumber = Console.ReadLine();
+                    PhoneNumber = Console.ReadLine();
                 }
 
                 Console.WriteLine("Enter the email id");
-                string emailId = Console.ReadLine();
-                while (!validateEmailId(emailId))
+                string EmailId = Console.ReadLine();
+                while (!validateEmailId(EmailId))
                 {
                     Console.WriteLine("Please enter proper Email ID ");
-                    emailId = Console.ReadLine();
+                    EmailId = Console.ReadLine();
                 }
 
 
 
 
-                contact = new contactBook(firstName, lastName, address, city, state, zip, phoneNumber, emailId);
-                list.Add(contact);
 
-                statewiseContact.Add(firstName, state);
-                citywiseContact.Add(firstName, city);
+                string path = @"C:\Users\NAGENDRA AND JANAKI\source\repos\AddressBookNew\AddressBookNew\TextFile1.txt";
+
+
+                contact = new contactBook(FirstName, LastName, Address, City, State, Zip, PhoneNumber, EmailId);
+                list.Add(contact);
+                string text = contact.FirstName + "\t" + contact.LastName + "\t" + contact.Address + "\t" + contact.City + "\t" + contact.State + "\t" + contact.Zip + "\t" + contact.PhoneNumber + "\t" + contact.EmailId + "\n";
+                File.AppendAllText(path, text);
+
+                statewiseContact.Add(FirstName, State);
+                citywiseContact.Add(FirstName, City);
+
+
+
+
             }
             else
             {
@@ -178,7 +260,6 @@ namespace adressBook
         {
 
             String reg = "(^[a-zA-Z0-9]{1,}([+-_.][a-zA-Z0-9]{1,}){0,}@[a-zA-Z0-9]{1,}(\\.[a-zA-Z]{1,}){0,1}(\\.[a-zA-Z]{2,})$)";
-            ;
 
             Regex re = new Regex(reg);
             if (re.IsMatch(emailId))
@@ -197,6 +278,8 @@ namespace adressBook
         /// </summary>
         public void editContact()
         {
+            string oldFirstName;
+
             int check = 0;
             int choice = 0;
             if (list.Count == 0)
@@ -215,8 +298,9 @@ namespace adressBook
                 }
                 foreach (var temp in list)
                 {
-                    if (temp.getFirstName().Equals(firstName))
+                    if (temp.FirstName.Equals(firstName))
                     {
+                        oldFirstName = temp.FirstName;
                         Console.WriteLine("Select which field you want to edit");
 
                         Console.WriteLine("1.FirstName\n2.LastName\n3.Address\n4.City\n5.State\n6.Zip\n7.Phone Number\n8.Email Id");
@@ -224,12 +308,13 @@ namespace adressBook
                         {
                             choice = Convert.ToInt32(Console.ReadLine());
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Console.WriteLine("Given Invalid input ");
                         }
                         if (choice == 1)
                         {
+
                             Console.WriteLine("Enter the new First Name");
                             firstName = Console.ReadLine();
                             while (!validateString(firstName))
@@ -237,10 +322,12 @@ namespace adressBook
                                 Console.WriteLine("Please Enter the proper First name");
                                 firstName = Console.ReadLine();
                             }
-                            temp.setFirstName(firstName);
+                            temp.FirstName = firstName;
+
                         }
                         else if (choice == 2)
                         {
+
                             Console.WriteLine("Enter the new Last Name");
                             string lastName = Console.ReadLine();
                             while (!validateString(lastName))
@@ -248,43 +335,51 @@ namespace adressBook
                                 Console.WriteLine("Please Enter the proper Last name");
                                 lastName = Console.ReadLine();
                             }
-                            temp.setLastName(lastName);
+                            temp.LastName = lastName;
+
                         }
                         else if (choice == 3)
                         {
+
                             Console.WriteLine("Enter the new Address");
                             string address = Console.ReadLine();
                             while (!validateString(address))
                             {
-                                Console.WriteLine("Please Enter the proper First name");
+                                Console.WriteLine("Please Enter the proper Address");
                                 address = Console.ReadLine();
                             }
-                            temp.setAddress(address);
+                            temp.Address = address;
+
                         }
                         else if (choice == 4)
                         {
+
                             Console.WriteLine("Enter the new City name ");
                             string city = Console.ReadLine();
                             while (!validateString(city))
                             {
-                                Console.WriteLine("Please Enter the proper First name");
+                                Console.WriteLine("Please Enter the proper City name");
                                 city = Console.ReadLine();
                             }
-                            temp.setCity(city);
+                            temp.City = city;
+
                         }
                         else if (choice == 5)
                         {
+
                             Console.WriteLine("Enter the new state name ");
                             string state = Console.ReadLine();
                             while (!validateString(state))
                             {
-                                Console.WriteLine("Please Enter the proper First name");
+                                Console.WriteLine("Please Enter the proper state name");
                                 state = Console.ReadLine();
                             }
-                            temp.setState(state);
+                            temp.State = state;
+
                         }
                         else if (choice == 6)
                         {
+
                             Console.WriteLine("Enter the new Zip ");
                             string zip = Console.ReadLine();
                             while (!validateZip(zip))
@@ -292,10 +387,12 @@ namespace adressBook
                                 Console.WriteLine("Enter the proper zip code");
                                 zip = Console.ReadLine();
                             }
-                            temp.setZip(zip);
+                            temp.Zip = zip;
+
                         }
                         else if (choice == 7)
                         {
+
                             Console.WriteLine("Enter the new phone number ");
                             string phoneNumber = Console.ReadLine();
                             while (!validatePhoneNumber(phoneNumber))
@@ -303,11 +400,13 @@ namespace adressBook
                                 Console.WriteLine("Please enter proper mobile number");
                                 phoneNumber = Console.ReadLine();
                             }
-                            temp.setPhoneNumber(phoneNumber);
+                            temp.PhoneNumber = phoneNumber;
+
 
                         }
                         else
                         {
+
                             Console.WriteLine("Enter the new Email Id");
                             string emailId = Console.ReadLine();
                             while (!validateEmailId(emailId))
@@ -315,11 +414,31 @@ namespace adressBook
                                 Console.WriteLine("Please enter proper Email Id");
                                 emailId = Console.ReadLine();
                             }
-                            temp.setEmailId(emailId);
+                            temp.EmailId = emailId;
+
                         }
 
                         check = 1;
                         Console.WriteLine("Edited Successfully");
+                        string path = "E:\\ContactFIle\\contacts.txt";
+
+                        string[] lines = File.ReadAllLines(path);
+                        List<string> fileList = lines.ToList();
+                        int count = 0;
+                        foreach (var line in lines)
+                        {
+                            count++;
+                            if (line.Contains(oldFirstName))
+                            {
+                                string text = temp.FirstName + "\t" + temp.LastName + "\t" + temp.Address + "\t" + temp.City + "\t" + temp.State + "\t" + temp.Zip + "\t" + temp.PhoneNumber + "\t" + temp.EmailId + "\n";
+
+                                fileList[count - 1] = text;
+
+                                break;
+                            }
+                        }
+                        File.WriteAllLines(path, fileList.ToArray());
+
 
                         break;
                     }
@@ -336,6 +455,9 @@ namespace adressBook
         /// </summary>
         public void deleteContact()
         {
+
+            string path = "E:\\ContactFIle\\contacts.txt";
+            string[] lines = File.ReadAllLines(path);
             int check = 0;
             if (list.Count == 0)
             {
@@ -354,11 +476,24 @@ namespace adressBook
 
                 foreach (var temp in list)
                 {
-                    if (temp.getFirstName().Equals(firstName))
+                    if (temp.FirstName.Equals(firstName))
                     {
                         list.Remove(temp);
                         check = 1;
+                        int count = 0;
                         Console.WriteLine("Deleted Successfully");
+                        foreach (var line in lines)
+                        {
+                            count++;
+                            if (line.Contains(temp.FirstName))
+                            {
+
+                                List<string> listFile = lines.ToList();
+                                listFile.RemoveAt(count - 1);
+                                File.WriteAllLines(path, listFile.ToArray());
+                                break;
+                            }
+                        }
 
                         break;
                     }
@@ -375,18 +510,26 @@ namespace adressBook
         /// </summary>
         public void displayContact()
         {
+
             if (list.Count == 0)
             {
-                Console.WriteLine("No contacts to Display");
+                Console.WriteLine("\nNo contacts to Display\n");
+
             }
+
             else
             {
+                SortBasedOnName();
+                //   SortBasedOnCity();
+                //   SortBasedOnState();
+                //   SortBasedOnZip();
                 Console.WriteLine("FirstName\tLastName\taddress\tCity\tState\tZip\tPhoneNumber\tEmail-Id");
                 foreach (var temp in list)
                 {
 
 
-                    Console.WriteLine(temp.getFirstName() + "\t\t" + temp.getLastName() + "\t\t" + temp.getAddress() + "\t" + temp.getCity() + "\t" + temp.getState() + "\t" + temp.getZip() + "\t" + temp.getPhoneNumber() + "\t" + temp.getEmailId());
+                    Console.WriteLine(temp.FirstName + "\t\t" + temp.LastName + "\t\t" + temp.Address + "\t" + temp.City + "\t" + temp.State + "\t" + temp.Zip + "\t" + temp.PhoneNumber + "\t" + temp.EmailId);
+
                 }
             }
         }
@@ -401,13 +544,34 @@ namespace adressBook
         {
             foreach (var contact in list)
             {
-                if (contact.getFirstName() == firstName)
+                if (contact.FirstName == firstName)
                 {
                     return true;
                 }
             }
             return false;
 
+
+        }
+
+        public void SortBasedOnName()
+        {
+            list = list.OrderBy(o => o.FirstName).ToList();
+
+        }
+        public void SortBasedOnCity()
+        {
+            list = list.OrderBy(o => o.City).ToList();
+
+        }
+        public void SortBasedOnState()
+        {
+            list = list.OrderBy(o => o.State).ToList();
+
+        }
+        public void SortBasedOnZip()
+        {
+            list = list.OrderBy(o => o.Zip).ToList();
 
         }
 
